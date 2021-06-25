@@ -1,2 +1,2 @@
 # Backjoon
-boj solved code
+BOJ solved code
