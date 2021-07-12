@@ -1,0 +1,112 @@
+좌표 ( x , y )
+
+0 1 2 3
+N E S W
+북 동 남 서
+forward 방향 : -x +y +x -y
+
+북 서 남 동
+0 3 2 1
+int cleanArea = 0;
+int start[2], direc;
+int *Area, FourArea[4];
+int N, M;
+int circleCount = 0;
+bool STOP = False;
+
+void circle (int& direction) {
+	if (direction)
+		direction--;
+	else
+		direction = 3;
+}
+
+void clean (void) {
+	Area[start[0]][start[1]] = -1;
+	cleanArea++;
+}
+
+bool Lsearch(int& option) {
+	FourArea[0] = Area[start[0]][start[1]-1]; // left
+	FourArea[1] = Area[start[0]-1][start[1]]; // top
+	FourArea[2] = Area[start[0]][start[1]+1]; // right
+	FourArea[3] = Area[start[0]+1][start[1]]; // bottom
+
+	if (!FourArea[option]) {
+		circle(option);
+		move(option, 1);
+		return true;
+	}
+
+	else
+		circle(option);
+
+	circleCount++;
+	return false;
+}
+
+bool backWall (int direction) {
+	FourArea[0] = Area[start[0]+1][start[1]]; // bottom
+	FourArea[1] = Area[start[0]][start[1]-1]; // left
+	FourArea[2] = Area[start[0]-1][start[1]]; // top
+	FourArea[3] = Area[start[0]][start[1]+1]; // right
+
+	if (FourArea[direction] == 1)
+		return true;
+	return false;
+}
+
+void move (int direction, int go) { // forward : go = 1, backward : go = -1
+	if (!direction) { // N
+		start[0] -= go;
+	}
+	else if (direction == 1) { // E
+		start[1] += go;
+	}
+	else if (direction == 2) { // S
+		start[0] += go;
+	}
+	else if (direction == 3) { // W
+		start[1] -= go;
+	}
+}
+
+cin >> N >> M;
+cin >> start[0] >> start[1] >> direc;
+
+Area = new int*[N];
+for (int i = 0; i < N; i++) {
+	Area[i] = new int[M];
+
+for (int i = 0; i < N; i++) {
+	for (int j = 0; j < M; j++) {
+		cin >> Area[i][j];
+
+while (!STOP) {
+
+clean(); // Function 1
+
+while(!Lsearch(direc)){ // Function 2 (a, b, c, d)
+	if (circleCount == 4) {
+		circleCount = 0;
+		if (backWall(direc)) {
+ 			STOP = True;
+			break;
+		}
+
+		else {
+			move(direc, -1);
+		}
+}
+
+1 1 1 1 1 1 1 1 1 1
+1 0 0 0 0 0 0 0 0 1
+1 0 0 0 1 1 1 1 0 1
+1 0 0 1 1 0 0 0 0 1
+1 0 1 1 0 0 0 0 0 1
+1 0 0 2 2 0 0 0 0 1
+1 0 2 2 2 2 0 1 0 1
+1 2 2 2 2 2 1 1 0 1
+1 2 2 2 2 2 1 1 0 1
+1 2 2 2 2 2 0 0 0 1
+1 1 1 1 1 1 1 1 1 1
