@@ -1,3 +1,4 @@
+// Greed Algorithm
 #include <iostream>
 #include <deque>
 #include <queue>
