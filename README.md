@@ -1,2 +1,1 @@
-# Backjoon
-BOJ solved code
+# BOJ solution
